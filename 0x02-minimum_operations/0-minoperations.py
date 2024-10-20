@@ -20,13 +20,11 @@ def minOperations(n):
     while len(paste) < n:
         copy = paste
         count += 1
-        print("copied All", copy, end=" ----> ")
         for i in range(2):
             if len(paste) >= n:
                 break
             count += 1
             paste += copy
-            print("paste", paste, end=" -----> ")
 
     if len(paste) == n:
         return count
