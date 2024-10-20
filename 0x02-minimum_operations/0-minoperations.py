@@ -14,6 +14,9 @@ def minOperations(n):
         0 if n character is not archievable, the number of copy and paste
         operation if successful
     """
+    if n <= 1:
+        return 0
+
     count = 0
     paste = "H"
 
