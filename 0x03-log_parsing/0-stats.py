@@ -4,45 +4,35 @@
 
 import sys
 
+if __name__ == '__main__':
 
-def main():
-    """ Entry point
-    """
-    var = {}
-    file_size = 0
+    filesize, count = 0, 0
+    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
+    stats = {k: 0 for k in codes}
+
+    def print_stats(stats: dict, file_size: int) -> None:
+        print("File size: {:d}".format(filesize))
+        for k, v in sorted(stats.items()):
+            if v:
+                print("{}: {}".format(k, v))
+
     try:
-        for i, line in enumerate(sys.stdin):
-            *parse, = line.split(" ")
-            ip, _, date, time, method, directory, protocol, s_code, f_size, \
-                *r = parse
-
+        for line in sys.stdin:
+            count += 1
+            data = line.split()
             try:
-                file_size += int(f_size)
-            except ValueError:
+                status_code = data[-2]
+                if status_code in stats:
+                    stats[status_code] += 1
+            except BaseException:
                 pass
-
-            if len(r) > 0 or len(s_code) < 3 or not s_code:
-                continue
             try:
-                int(s_code)
-            except ValueError:
-                continue
-            if not var.get(s_code, None):
-                var[s_code] = 1
-            else:
-                var[s_code] += 1
-
-            if (i + 1) % 10 == 0:
-                print(f"File size: {file_size}")
-                for x in sorted(var):
-                    print(f"{x}: {var[x]}")
-
+                filesize += int(data[-1])
+            except BaseException:
+                pass
+            if count % 10 == 0:
+                print_stats(stats, filesize)
+        print_stats(stats, filesize)
     except KeyboardInterrupt:
-        print(f"File size: {file_size}")
-        for x in sorted(var):
-            print(f"{x}: {var[x]}")
+        print_stats(stats, filesize)
         raise
-
-
-if __name__ == "__main__":
-    main()
