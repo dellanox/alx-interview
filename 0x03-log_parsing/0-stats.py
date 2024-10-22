@@ -36,6 +36,8 @@ def main():
         print(f"File size: {file_size}")
         for x in sorted(var):
             print(f"{x}: {var[x]}")
+        raise
 
 
-main()
+if __name__ == "__main__":
+    main()
