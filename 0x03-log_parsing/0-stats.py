@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ reads stdin line by line and computes metrics
 """
 
@@ -33,6 +33,9 @@ def main():
                     print(f"{x}: {var[x]}")
 
     except KeyboardInterrupt:
-        print(var)
+        print(f"File size: {file_size}")
+        for x in sorted(var):
+            print(f"{x}: {var[x]}")
+
 
 main()
